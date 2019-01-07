@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Lumiamuyu.dao.UserDao">
+    <select id="getLists" resultType="User">
+        select * from user
+    </select>
+
+    <select id="getOne" resultType="User">
+        select * from user where id = #{id}
+    </select>
+
+    <insert id="insertOne" parameterType="User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username!=null">
+                username,
+            </if>
+            <if test="password!=null">
+                password,
+            </if>
+            <if test="email!=null">
+                email,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="username!=null">
+                #{username},
+            </if>
+            <if test="password!=null">
+                #{password},
+            </if>
+            <if test="email!=null">
+                #{email},
+            </if>
+        </trim>
+
+    </insert>
+    <delete id="delete">
+        delete from user where id = #{id}
+    </delete>
+
+
+    <update id="update">
+        update user
+        <set>
+            <trim suffixOverrides=",">
+                <if test="username != null">
+                    username = #{username},
+                </if>
+                <if test="password != null">
+                    password = #{password},
+                </if>
+                <if test="email != null">
+                    email = #{email},
+                </if>
+            </trim>
+        </set>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+        </where>
+    </update>
+</mapper>
