@@ -20,6 +20,13 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**/*.do"/>
+            <bean class="Lumiamuyu.web.TestMethod"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <!--开启注解驱动-->
     <mvc:annotation-driven/>
     <!--扫描controller所在的包-->
@@ -30,6 +37,9 @@
         <property name="prefix" value="WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
+    <bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10000000000"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
 
 </beans>

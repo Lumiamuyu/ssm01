@@ -11,6 +11,10 @@
         select * from user where id = #{id}
     </select>
 
+    <select id="getUser" resultType="User">
+        select * from user where username = #{username}
+    </select>
+
     <insert id="insertOne" parameterType="User">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">

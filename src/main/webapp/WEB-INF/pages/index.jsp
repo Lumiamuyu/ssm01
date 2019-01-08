@@ -34,5 +34,6 @@
     </tbody>
 </table>
 <a href="insert.do">insert</a>
+<a href="exit.do">退出</a>
 </body>
 </html>
