@@ -11,4 +11,5 @@ public interface IUserService {
     public int update(User user);
     public User getOne(int id);
     public User getUser(String username);
+    public List<User> getList(User user);
 }

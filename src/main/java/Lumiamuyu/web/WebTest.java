@@ -3,6 +3,8 @@ package Lumiamuyu.web;
 import Lumiamuyu.pojo.CookiesUtil;
 import Lumiamuyu.pojo.User;
 import Lumiamuyu.service.IUserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -117,4 +119,19 @@ public class WebTest {
 
         return "redirect:upload.do";
     }
+
+    @RequestMapping("/list.do")
+    public String list(ModelMap map,HttpServletRequest req,User user){
+        int pageNum = req.getParameter("pageNum")==null?1:Integer.parseInt(req.getParameter("pageNum"));
+        int pageSize = 2;
+        PageHelper.startPage(pageNum,pageSize);
+        List<User> list = service.getList(user);
+        String uname = "&username="+user.getUsername();
+        PageInfo<User> page = new PageInfo<>(list);
+        map.addAttribute("uname",uname);
+        map.addAttribute("list",list);
+        map.addAttribute("page",page);
+        return "list";
+    }
+
 }

@@ -46,4 +46,9 @@ public class UserServiceImpl implements IUserService {
         return dao.getUser(username);
     }
 
+    @Override
+    public List<User> getList(User user) {
+        return dao.getList(user);
+    }
+
 }

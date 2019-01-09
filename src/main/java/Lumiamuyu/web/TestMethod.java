@@ -20,9 +20,8 @@ public class TestMethod implements HandlerInterceptor {
         CookiesUtil.getCookie(cookies);
         Map<String,Cookie> maps = CookiesUtil.getCookie(cookies);
         Cookie cookie = maps.get("username");
+/*        System.out.println(cookie.getName()+" "+cookie.getValue());*/
 /*        String username = cookie.getValue();*/
-
-        System.out.println(user);
 
         return true;
         /*if (user.getUsername().equals(username)){

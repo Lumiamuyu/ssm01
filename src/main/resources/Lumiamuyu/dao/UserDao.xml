@@ -5,6 +5,16 @@
 <mapper namespace="Lumiamuyu.dao.UserDao">
     <select id="getLists" resultType="User">
         select * from user
+
+    </select>
+
+    <select id="getList" resultType="User" parameterType="User">
+        select * from user
+        <where>
+            <if test="username!=null">
+                and username like concat('%',#{username},'%')
+            </if>
+        </where>
     </select>
 
     <select id="getOne" resultType="User">
