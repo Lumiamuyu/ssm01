@@ -6,6 +6,7 @@ import Lumiamuyu.service.IUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -125,13 +126,30 @@ public class WebTest {
         int pageNum = req.getParameter("pageNum")==null?1:Integer.parseInt(req.getParameter("pageNum"));
         int pageSize = 2;
         PageHelper.startPage(pageNum,pageSize);
-        List<User> list = service.getList(user);
-        String uname = "&username="+user.getUsername();
-        PageInfo<User> page = new PageInfo<>(list);
-        map.addAttribute("uname",uname);
+        List<User> list = null;
+        if (StringUtils.isBlank(user.getUsername())){
+            user.setUsername(null);
+            list=service.getList(user);
+        }else {
+            list=service.getList(user);
+            String uname = "&username="+user.getUsername();
+            map.addAttribute("uname",uname);
+        }
+        PageInfo<User> page = new PageInfo<>(list,3);
         map.addAttribute("list",list);
         map.addAttribute("page",page);
         return "list";
+    }
+
+    @RequestMapping("/register.do")
+    public String register(){
+        return "register";
+    }
+
+    @RequestMapping("/doRegister.do")
+    public String doRegister(ModelMap map,User user){
+        service.insertOne(user);
+        return "redirect:list.do";
     }
 
 }

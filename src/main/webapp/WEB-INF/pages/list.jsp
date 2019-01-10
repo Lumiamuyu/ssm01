@@ -77,7 +77,7 @@
                     <li>上一页</li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="list.do?pageNum=${page.navigateFirstPage}${uname}">首页</a></li>
+                    <li><a href="list.do?pageNum=1${uname}">首页</a></li>
                     <li><a href="list.do?pageNum=${page.prePage}${uname}">上一页</a></li>
                 </c:otherwise>
             </c:choose>
@@ -100,12 +100,11 @@
                 </c:when>
                 <c:otherwise>
                     <li><a href="list.do?pageNum=${page.nextPage}${uname}">下一页</a></li>
-                    <li><a href="list.do?pageNum=${page.navigateLastPage}${uname}">尾页</a></li>
+                    <li><a href="list.do?pageNum=${page.pages}${uname}">尾页</a></li>
                 </c:otherwise>
             </c:choose>
         </c:when>
     </c:choose>
-
 </ul>
 
 ${page}
