@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
@@ -146,10 +147,44 @@ public class WebTest {
         return "register";
     }
 
-    @RequestMapping("/doRegister.do")
-    public String doRegister(ModelMap map,User user){
-        service.insertOne(user);
-        return "redirect:list.do";
+    @RequestMapping(value = "/doRegister.do")
+    @ResponseBody
+    public String doRegister(HttpServletRequest req,HttpServletResponse resp){
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String passwords = req.getParameter("passwords");
+        String email =req.getParameter("email");
+
+        if (username != ""){
+            User user = service.getUser(username);
+            if (user==null){
+                if (password!=""&&passwords!=""){
+                    if (password.equals(passwords)){
+                        return "OK";
+                        /*resp.getWriter().write("3");//全匹配进行注册*/
+                    }else{
+                        /*resp.getWriter().write("2");//两次密码输入不一致*/
+                        return "PwdNotOk";
+                    }
+                }
+            }else {
+                return "nameNotOK";
+            }
+        }
+            return "redirect:list.do";
+    }
+
+
+    @RequestMapping("/regIt.do")
+    @ResponseBody
+    public String regIt(HttpServletRequest req,HttpServletResponse resp,User user){
+        int result = service.insertOne(user);
+        if (result>0){
+            return "1";
+        }else {
+            return "0";
+        }
+
     }
 
 }
